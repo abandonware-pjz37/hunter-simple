@@ -1,0 +1,61 @@
+# Linux (https://github.com/travis-ci-tester/toolchain-table)
+
+language:
+    - python
+
+python:
+    - "3.3"
+
+env:
+    - TOOLCHAIN=default CONFIG=Release
+    - TOOLCHAIN=default CONFIG=Debug
+    - TOOLCHAIN=clang_libstdcxx CONFIG=Release
+    - TOOLCHAIN=clang_libstdcxx CONFIG=Debug
+    - TOOLCHAIN=gcc48 CONFIG=Release
+    - TOOLCHAIN=gcc48 CONFIG=Debug
+    - TOOLCHAIN=analyze CONFIG=Release
+    - TOOLCHAIN=analyze CONFIG=Debug
+    - TOOLCHAIN=sanitize_address CONFIG=Release
+    - TOOLCHAIN=sanitize_address CONFIG=Debug
+    - TOOLCHAIN=sanitize_leak CONFIG=Release
+    - TOOLCHAIN=sanitize_leak CONFIG=Debug
+    - TOOLCHAIN=sanitize_memory CONFIG=Release
+    - TOOLCHAIN=sanitize_memory CONFIG=Debug
+    - TOOLCHAIN=sanitize_thread CONFIG=Release
+    - TOOLCHAIN=sanitize_thread CONFIG=Debug
+
+install:
+    # install gcc-4.8 with c++11 support: https://github.com/travis-ci-tester/travis-test-gcc-cxx-11
+    - sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
+    - sudo apt-get update
+    - sudo apt-get install g++-4.8
+    # -- end
+    # https://github.com/travis-ci-tester/travis-test-clang-cxx-11
+    - sudo apt-get install libstdc++-4.8-dev
+    # -- end
+    - sudo apt-get install cmake
+    - sudo apt-get install libcurl3-dev
+    # install cmake toolchains and script
+    - POLLY_VERSION="0.4.4"
+    - wget "https://github.com/ruslo/polly/archive/v${POLLY_VERSION}.tar.gz"
+    - tar xf "v${POLLY_VERSION}.tar.gz"
+    - export POLLY_ROOT="`pwd`/polly-${POLLY_VERSION}"
+    - export PATH="${POLLY_ROOT}/bin:${PATH}"
+    # -- end
+    # install cmake
+    - CMAKE_VERSION="3.0.0-ios-universal"
+    - wget "https://github.com/ruslo/CMake/archive/v${CMAKE_VERSION}.tar.gz"
+    - openssl sha1 "v${CMAKE_VERSION}.tar.gz"
+    - tar xf "v${CMAKE_VERSION}.tar.gz"
+    - cd "CMake-${CMAKE_VERSION}"
+    -   build.py --install --toolchain default --config Release --fwd "CMAKE_USE_SYSTEM_CURL=YES"
+    -   export PATH="`pwd`/_install/default/bin:${PATH}"
+    - cd ..
+    # -- end
+    # verify installed cmake
+    - which cmake
+    - cmake --version
+    # -- end
+
+script:
+    - build.py --toolchain ${TOOLCHAIN} --verbose --test --config ${CONFIG}
