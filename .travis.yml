@@ -19,8 +19,6 @@ env:
     - TOOLCHAIN=sanitize_address CONFIG=Debug
     - TOOLCHAIN=sanitize_leak CONFIG=Release
     - TOOLCHAIN=sanitize_leak CONFIG=Debug
-    - TOOLCHAIN=sanitize_memory CONFIG=Release
-    - TOOLCHAIN=sanitize_memory CONFIG=Debug
     - TOOLCHAIN=sanitize_thread CONFIG=Release
     - TOOLCHAIN=sanitize_thread CONFIG=Debug
 
