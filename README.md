@@ -60,7 +60,7 @@ This script equivalent to:
 Check [gtest][3] directories:
 ```
 /path/to/hunter/root/Base/Install/xcode # install directory
-/path/to/hunter/root/Base/Source/Gtest # unpacked source directory
+/path/to/hunter/root/Base/Source/GTest # unpacked source directory
 /path/to/hunter/root/Download/GTest # path to downloaded archive
 ```
 
