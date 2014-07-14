@@ -22,5 +22,10 @@ add_executable(simple simple.cpp)
 target_link_libraries(simple GTest::main)
 
 ### Testing ###
-enable_testing()
-add_test(SimpleTest simple)
+string(COMPARE EQUAL "${CMAKE_OSX_SYSROOT}" "iphoneos" is_ios)
+if(NOT is_ios)
+  enable_testing()
+  add_test(SimpleTest simple)
+else()
+  # https://github.com/ruslo/sugar/tree/master/cmake/core#sugar_add_gtest
+endif()
