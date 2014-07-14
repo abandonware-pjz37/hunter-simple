@@ -103,22 +103,28 @@ function(hunter_gate_try_lock result)
   # `cmake -E make_directory` is not fit here because this command succeed
   # even if directory already exists
   if(WIN32)
+    if(MINGW)
+      # He-he :)
+      string(REPLACE "/" "\\" lock_path "${lock_path}")
+    endif()
     execute_process(
         COMMAND cmd /C mkdir "${lock_path}"
         RESULT_VARIABLE lock_result
-        OUTPUT_QUIET
-        ERROR_QUIET
+        OUTPUT_VARIABLE lock_result_info
+        ERROR_VARIABLE lock_result_info
     )
   else()
     execute_process(
         COMMAND mkdir "${lock_path}"
         RESULT_VARIABLE lock_result
-        OUTPUT_QUIET
-        ERROR_QUIET
+        OUTPUT_VARIABLE lock_result_info
+        ERROR_VARIABLE lock_result_info
     )
   endif()
 
   if(NOT lock_result EQUAL 0)
+    message("Lock failed with result: ${lock_result}")
+    message("Reason:  ${lock_result_info}")
     set(${result} FALSE PARENT_SCOPE)
     return()
   endif()
