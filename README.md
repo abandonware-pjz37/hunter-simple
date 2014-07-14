@@ -68,9 +68,9 @@ Check [gtest][3] directories:
 
 ### More
 
-* Travis CI config for Linux: https://github.com/forexample/hunter-simple/blob/master/.travis.yml
-* Travis CI config for Mac: https://github.com/forexample/hunter-simple/blob/macosx/.travis.yml
-* More realistic example: https://github.com/ruslo/weather
+* [Travis CI config for Linux](https://github.com/forexample/hunter-simple/blob/master/.travis.yml)
+* [Travis CI config for Mac](https://github.com/forexample/hunter-simple/blob/macosx/.travis.yml)
+* [Weather (Boost, CppNetlib.URI, GTest, JSON Spirit)](https://github.com/ruslo/weather)
 
 [master]: https://travis-ci.org/forexample/hunter-simple.svg?branch=master
 [macosx]: https://travis-ci.org/forexample/hunter-simple.svg?branch=macosx
