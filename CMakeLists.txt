@@ -4,8 +4,14 @@
 cmake_minimum_required(VERSION 3.0)
 project(HunterSimple)
 
+### Hunter snapshot that will be used ###
+include("cmake/HunterGate.cmake")
+HunterGate(
+    URL "https://github.com/ruslo/hunter/archive/v0.5.4.tar.gz"
+    SHA1 "ccf0b8645b0833d3025ed0952df466ba5e683de8"
+)
+
 ### Download dependencies ###
-include(HunterGate.cmake)
 hunter_add_package(GTest)
 
 ### Find dependencies ###
