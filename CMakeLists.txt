@@ -7,8 +7,8 @@ project(HunterSimple)
 ### Hunter snapshot that will be used ###
 include("cmake/HunterGate.cmake")
 HunterGate(
-    URL "https://github.com/ruslo/hunter/archive/v0.5.5.tar.gz"
-    SHA1 "53cf9406dc858061e61617c11d7e19024ebfa774"
+    URL "https://github.com/ruslo/hunter/archive/v0.5.6.tar.gz"
+    SHA1 "a3e85f37b586abaae9d8d17ee459510e4ea689d8"
 )
 
 ### Download dependencies ###
