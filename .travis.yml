@@ -55,4 +55,4 @@ install:
     # -- end
 
 script:
-    - build.py --toolchain ${TOOLCHAIN} --verbose --test --config ${CONFIG} --fwd HUNTER_RUN_INSTALL=ON
+    - build.py --toolchain ${TOOLCHAIN} --verbose --test --config ${CONFIG}
