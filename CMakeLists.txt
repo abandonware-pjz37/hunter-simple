@@ -20,7 +20,7 @@ find_package(GTest CONFIG REQUIRED) # GTest::main
 
 ### Targets ###
 add_executable(simple simple.cpp)
-target_link_libraries(simple GTest::main)
+target_link_libraries(simple PUBLIC GTest::main)
 
 ### Testing ###
 string(COMPARE EQUAL "${CMAKE_OSX_SYSROOT}" "iphoneos" is_ios)
