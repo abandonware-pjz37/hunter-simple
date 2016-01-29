@@ -1,4 +1,4 @@
-# Copyright (c) 2014, Ruslan Baratov
+# Copyright (c) 2014-2016, Ruslan Baratov
 # All rights reserved.
 
 cmake_minimum_required(VERSION 3.0)
@@ -16,7 +16,7 @@ project(HunterSimple)
 hunter_add_package(GTest)
 
 ### Find dependencies ###
-find_package(GTest CONFIG REQUIRED NO_CMAKE_BUILDS_PATH) # GTest::main
+find_package(GTest CONFIG REQUIRED) # GTest::main
 
 ### Targets ###
 add_executable(simple simple.cpp)
