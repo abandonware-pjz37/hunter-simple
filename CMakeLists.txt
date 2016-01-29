@@ -23,10 +23,20 @@ add_executable(simple simple.cpp)
 target_link_libraries(simple PUBLIC GTest::main)
 
 ### Testing ###
-string(COMPARE EQUAL "${CMAKE_OSX_SYSROOT}" "iphoneos" is_ios)
-if(NOT is_ios)
-  enable_testing()
-  add_test(SimpleTest simple)
+enable_testing()
+
+if(IOS)
+  # Extra cmake modules needed for iOS testing:
+  # * https://github.com/ruslo/sugar/tree/master/cmake/core#sugar_add_ios_gtest
+  add_test(
+      NAME SimpleTest COMMAND "${CMAKE_COMMAND}" -E echo "iOS testing ignored"
+  )
+elseif(ANDROID)
+  # Building .apk, testing: https://github.com/forexample/android-cmake
+  add_test(
+      NAME SimpleTest
+      COMMAND "${CMAKE_COMMAND}" -E echo "Android testing ignored"
+  )
 else()
-  # https://github.com/ruslo/sugar/tree/master/cmake/core#sugar_add_gtest
+  add_test(NAME SimpleTest COMMAND simple)
 endif()
