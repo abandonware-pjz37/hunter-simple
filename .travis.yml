@@ -1,58 +1,137 @@
-# Linux (https://github.com/travis-ci-tester/toolchain-table)
+# OSX/Linux (https://github.com/travis-ci-tester/toolchain-table)
 
-language:
-    - python
+os:
+  - linux
+  - osx
 
-python:
-    - "3.3"
+# Container-based infrastructure (Linux)
+# * https://docs.travis-ci.com/user/migrating-from-legacy/#How-can-I-use-container-based-infrastructure%3F
+sudo:
+  - false
+
+# Install packages differs for container-based infrastructure
+# * https://docs.travis-ci.com/user/migrating-from-legacy/#How-do-I-install-APT-sources-and-packages%3F
+# * http://stackoverflow.com/a/30925448/2288008
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - cmake
+      - python3
+
+      # https://github.com/travis-ci-tester/travis-test-clang-cxx-11
+      - libstdc++-4.8-dev
+
+      # https://github.com/travis-ci-tester/travis-test-gcc-cxx-11
+      - g++-4.8
 
 env:
-    - TOOLCHAIN=default CONFIG=Release
-    - TOOLCHAIN=default CONFIG=Debug
-    - TOOLCHAIN=clang-libstdcxx CONFIG=Release
-    - TOOLCHAIN=clang-libstdcxx CONFIG=Debug
-    - TOOLCHAIN=gcc-4-8 CONFIG=Release
-    - TOOLCHAIN=gcc-4-8 CONFIG=Debug
-    - TOOLCHAIN=analyze CONFIG=Release
-    - TOOLCHAIN=analyze CONFIG=Debug
-    - TOOLCHAIN=sanitize-address CONFIG=Release
-    - TOOLCHAIN=sanitize-address CONFIG=Debug
-    - TOOLCHAIN=sanitize-leak CONFIG=Release
-    - TOOLCHAIN=sanitize-leak CONFIG=Debug
-    - TOOLCHAIN=sanitize-thread CONFIG=Release
-    - TOOLCHAIN=sanitize-thread CONFIG=Debug
+  - TOOLCHAIN=default CONFIG=Release
+  - TOOLCHAIN=default CONFIG=Debug
+  - TOOLCHAIN=libcxx CONFIG=Debug
+  - TOOLCHAIN=libcxx CONFIG=Release
+  - TOOLCHAIN=clang-libstdcxx CONFIG=Release
+  - TOOLCHAIN=clang-libstdcxx CONFIG=Debug
+  - TOOLCHAIN=xcode CONFIG=Debug
+  - TOOLCHAIN=xcode CONFIG=Release
+  - TOOLCHAIN=osx-10-9 CONFIG=Debug
+  - TOOLCHAIN=osx-10-9 CONFIG=Release
+  - TOOLCHAIN=gcc CONFIG=Debug
+  - TOOLCHAIN=gcc CONFIG=Release
+  - TOOLCHAIN=gcc-4-8 CONFIG=Release
+  - TOOLCHAIN=gcc-4-8 CONFIG=Debug
+  - TOOLCHAIN=ios-nocodesign CONFIG=Debug EXTRA="--iossim"
+  - TOOLCHAIN=ios-nocodesign CONFIG=Release EXTRA="--iossim"
+  - TOOLCHAIN=android-ndk-r10e-api-19-armeabi-v7a-neon CONFIG=Release
+  - TOOLCHAIN=android-ndk-r10e-api-19-armeabi-v7a-neon CONFIG=Debug
+  - TOOLCHAIN=analyze CONFIG=Release
+  - TOOLCHAIN=analyze CONFIG=Debug
+  - TOOLCHAIN=sanitize-address CONFIG=Release
+  - TOOLCHAIN=sanitize-address CONFIG=Debug
+  - TOOLCHAIN=sanitize-leak CONFIG=Release
+  - TOOLCHAIN=sanitize-leak CONFIG=Debug
+  - TOOLCHAIN=sanitize-thread CONFIG=Release
+  - TOOLCHAIN=sanitize-thread CONFIG=Debug
+
+matrix:
+  exclude:
+    ### Linux excludes ###
+    # https://github.com/travis-ci-tester/travis-test-clang-with-libcxx
+    - os: linux
+      env: TOOLCHAIN=libcxx CONFIG=Debug
+    - os: linux
+      env: TOOLCHAIN=libcxx CONFIG=Release
+
+    # Xcode is for OSX only
+    - os: linux
+      env: TOOLCHAIN=xcode CONFIG=Debug
+    - os: linux
+      env: TOOLCHAIN=xcode CONFIG=Release
+    - os: linux
+      env: TOOLCHAIN=osx-10-9 CONFIG=Debug
+    - os: linux
+      env: TOOLCHAIN=osx-10-9 CONFIG=Release
+    - os: linux
+      env: TOOLCHAIN=ios-nocodesign CONFIG=Debug EXTRA="--iossim"
+    - os: linux
+      env: TOOLCHAIN=ios-nocodesign CONFIG=Release EXTRA="--iossim"
+
+    # https://github.com/travis-ci-tester/travis-test-gcc-cxx-11
+    - os: linux
+      env: TOOLCHAIN=gcc CONFIG=Debug
+    - os: linux
+      env: TOOLCHAIN=gcc CONFIG=Release
+
+    ### OSX excludes ###
+    # TOOLCHAIN=gcc works fine on OSX
+    - os: osx
+      env: TOOLCHAIN=gcc-4-8 CONFIG=Debug
+    - os: osx
+      env: TOOLCHAIN=gcc-4-8 CONFIG=Release
+
+    # https://github.com/travis-ci-tester/travis-test-mac-clang-address-sanitizer
+    - os: osx
+      env: TOOLCHAIN=sanitize-address CONFIG=Release
+    - os: osx
+      env: TOOLCHAIN=sanitize-address CONFIG=Debug
+
+    # Linux only
+    - os: osx
+      env: TOOLCHAIN=sanitize-leak CONFIG=Release
+    - os: osx
+      env: TOOLCHAIN=sanitize-leak CONFIG=Debug
+    - os: osx
+      env: TOOLCHAIN=sanitize-thread CONFIG=Release
+    - os: osx
+      env: TOOLCHAIN=sanitize-thread CONFIG=Debug
 
 install:
-    # install gcc-4.8 with c++11 support: https://github.com/travis-ci-tester/travis-test-gcc-cxx-11
-    - sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
-    - sudo apt-get update
-    - sudo apt-get install g++-4.8
-    # -- end
-    # https://github.com/travis-ci-tester/travis-test-clang-cxx-11
-    - sudo apt-get install libstdc++-4.8-dev
-    # -- end
-    - sudo apt-get install cmake
-    - sudo apt-get install libcurl3-dev
-    # install cmake toolchains and script
-    - POLLY_VERSION="0.9.0"
-    - wget "https://github.com/ruslo/polly/archive/v${POLLY_VERSION}.tar.gz"
-    - tar xf "v${POLLY_VERSION}.tar.gz"
-    - export PATH="`pwd`/polly-${POLLY_VERSION}/bin:${PATH}"
-    # -- end
-    # install cmake
-    - CMAKE_VERSION="3.2.1-ruslo"
-    - wget "https://github.com/ruslo/CMake/archive/v${CMAKE_VERSION}.tar.gz"
-    - openssl sha1 "v${CMAKE_VERSION}.tar.gz"
-    - tar xf "v${CMAKE_VERSION}.tar.gz"
-    - cd "CMake-${CMAKE_VERSION}"
-    -   build.py --install --toolchain default --config Release --fwd "CMAKE_USE_SYSTEM_CURL=YES"
-    -   export PATH="`pwd`/_install/default/bin:${PATH}"
-    - cd ..
-    # -- end
-    # verify installed cmake
-    - which cmake
-    - cmake --version
-    # -- end
+  - ./ci/install-deps.sh
+
+  # Installed by install-deps.sh if platform is Linux;
+  # (directory doesn't exist for OSX)
+  - export PATH="`pwd`/cmake-3.4.0-Linux-x86_64/bin:${PATH}"
+
+  # Installed by install-deps.sh if platform is OSX;
+  # (directory doesn't exist for Linux)
+  - export PATH="`pwd`/cmake-3.3.2-Darwin-x86_64/bin:${PATH}"
+
+  # Installed by install-deps.sh if toolchain is Android
+  # (otherwise directory doesn't exist)
+  - export ANDROID_NDK_r10e="`pwd`/android-ndk-r10e"
+
+  # Install Polly toolchains
+  - POLLY_VERSION="0.9.0"
+  - wget "https://github.com/ruslo/polly/archive/v${POLLY_VERSION}.tar.gz"
+  - tar xf "v${POLLY_VERSION}.tar.gz"
+  - export PATH="`pwd`/polly-${POLLY_VERSION}/bin:${PATH}"
+
+  # Check versions of tools
+  - which cmake
+  - cmake --version
+  - which python3
+  - python3 --version
 
 script:
-    - build.py --toolchain ${TOOLCHAIN} --verbose --test --config ${CONFIG}
+  - build.py --toolchain ${TOOLCHAIN} --config ${CONFIG} --verbose --test ${EXTRA}

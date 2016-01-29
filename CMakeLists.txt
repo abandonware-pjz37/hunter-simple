@@ -1,4 +1,4 @@
-# Copyright (c) 2014, Ruslan Baratov
+# Copyright (c) 2014-2016, Ruslan Baratov
 # All rights reserved.
 
 cmake_minimum_required(VERSION 3.0)
@@ -16,17 +16,27 @@ project(HunterSimple)
 hunter_add_package(GTest)
 
 ### Find dependencies ###
-find_package(GTest CONFIG REQUIRED NO_CMAKE_BUILDS_PATH) # GTest::main
+find_package(GTest CONFIG REQUIRED) # GTest::main
 
 ### Targets ###
 add_executable(simple simple.cpp)
-target_link_libraries(simple GTest::main)
+target_link_libraries(simple PUBLIC GTest::main)
 
 ### Testing ###
-string(COMPARE EQUAL "${CMAKE_OSX_SYSROOT}" "iphoneos" is_ios)
-if(NOT is_ios)
-  enable_testing()
-  add_test(SimpleTest simple)
+enable_testing()
+
+if(IOS)
+  # Extra cmake modules needed for iOS testing:
+  # * https://github.com/ruslo/sugar/tree/master/cmake/core#sugar_add_ios_gtest
+  add_test(
+      NAME SimpleTest COMMAND "${CMAKE_COMMAND}" -E echo "iOS testing ignored"
+  )
+elseif(ANDROID)
+  # Building .apk, testing: https://github.com/forexample/android-cmake
+  add_test(
+      NAME SimpleTest
+      COMMAND "${CMAKE_COMMAND}" -E echo "Android testing ignored"
+  )
 else()
-  # https://github.com/ruslo/sugar/tree/master/cmake/core#sugar_add_gtest
+  add_test(NAME SimpleTest COMMAND simple)
 endif()
