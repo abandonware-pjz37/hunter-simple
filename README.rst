@@ -92,7 +92,7 @@ More
 
 * `Travis CI config for Linux/OSX <https://github.com/forexample/hunter-simple/blob/master/.travis.yml>`_
 * `AppVeyor config for Windows <https://github.com/forexample/hunter-simple/blob/master/appveyor.yml>`_
-* `Weather (Boost, CppNetlib.URI, GTest, JSON Spirit <https://github.com/ruslo/weather>`_
+* `Weather (Boost, CppNetlib.URI, GTest, JSON Spirit) <https://github.com/ruslo/weather>`_
 
 .. _Hunter: https://github.com/ruslo/hunter
 .. _alternatives: https://github.com/hunter-packages/gate#effects
