@@ -21,7 +21,7 @@ Usage
 -----
 
 * Set ``HUNTER_ROOT`` environment variable (recommended, see `alternatives`_)
-* Run configure: ``cmake -H. -B_builds -DHUNTER_STATUS_DEBUG=ON -DCMAKE_BUILD_TYPE=Debug``
+* Generate project: ``cmake -H. -B_builds -DHUNTER_STATUS_DEBUG=ON -DCMAKE_BUILD_TYPE=Debug``
 * Run build: ``cmake --build _builds --config Debug``
 * Run test: ``cd _builds && ctest -C Debug -VV``
 
