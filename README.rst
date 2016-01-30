@@ -1,8 +1,8 @@
 .. |AppVeyor| image:: https://ci.appveyor.com/api/projects/status/ya8pap2nvskth4mx/branch/master?svg=true
-  :target: https://ci.appveyor.com/project/ruslo/hunter-simple/branch/master
+  :target: https://ci.appveyor.com/project/ruslo/hunter-simple/history
 
 .. |TravisCI| image:: https://travis-ci.org/forexample/hunter-simple.svg?branch=master
-  :target: https://travis-ci.org/forexample/hunter-simple
+  :target: https://travis-ci.org/forexample/hunter-simple/builds
 
 ========== ==========
 Linux/OSX  Windows
@@ -21,9 +21,9 @@ Usage
 -----
 
 * Set ``HUNTER_ROOT`` environment variable (recommended, see `alternatives`_)
-* Run generate: ``cmake -H. -B_builds -DHUNTER_STATUS_DEBUG=ON``
-* Run build: ``cmake --build _builds``
-* Run test: ``cd _builds && ctest``
+* Run configure: ``cmake -H. -B_builds -DHUNTER_STATUS_DEBUG=ON -DCMAKE_BUILD_TYPE=Debug``
+* Run build: ``cmake --build _builds --config Debug``
+* Run test: ``cd _builds && ctest -C Debug -VV``
 
 Output
 ------
@@ -32,19 +32,21 @@ Output
 
 .. code-block:: bash
 
-  -- [hunter] Hunter not found, start download to '/path/to/hunter/root/' ...
+  -- [hunter] Initializing Hunter workspace (0ccc3f3fd571676a1804723984598f9f90a4d6bc)
+  -- [hunter]   https://github.com/ruslo/hunter/archive/v0.12.40.tar.gz
+  -- [hunter]   -> /home/travis/.hunter/_Base/Download/Hunter/0.12.40/0ccc3f3
 
 * After download done cmake variable ``HUNTER_ROOT`` set:
 
 .. code-block:: bash
 
-  -- [hunter] HUNTER_ROOT: /path/to/hunter/root/
+  -- [hunter] HUNTER_ROOT: /home/travis/.hunter
 
 * Requested package `GTest`_ will be downloaded using wrapped `ExternalProject_Add`_ command:
 
 .. code-block:: bash
 
-  -- [hunter] GTEST_ROOT: /path/to/hunter/root/Base/Install/default (ver.: 1.7.0-hunter-7)
+  -- [hunter] GTEST_ROOT: /home/travis/.hunter/_Base/0ccc3f3/b874e31/3ef6df8/Install (ver.: 1.7.0-hunter-11)
 
 Usage (toolchains)
 ------------------
@@ -55,17 +57,17 @@ Build functionality can be extended using `toolchains`_:
 
 .. code-block:: bash
 
-  > export POLLY_VERSION="0.4.4"
+  > export POLLY_VERSION="0.9.0"
   > wget "https://github.com/ruslo/polly/archive/v${POLLY_VERSION}.tar.gz"
   > tar xf "v${POLLY_VERSION}.tar.gz"
-  > export POLLY_ROOT="`pwd`/polly-${POLLY_VERSION}"
+  > export POLLY_ROOT="`pwd`/polly-${POLLY_VERSION}" # not needed in general
   > export PATH="${POLLY_ROOT}/bin:${PATH}"
 
 * Now ``build.py`` python3 script from ``${POLLY_ROOT}/bin`` directory can be used to start for example ``Xcode`` project:
 
 .. code-block:: bash
 
-  > build.py --toolchain xcode --open --nobuild --fwd HUNTER_STATUS_DEBUG=ON
+  > build.py --toolchain xcode --open --nobuild --verbose
 
 This script equivalent to:
 
@@ -78,9 +80,8 @@ Check `GTest`_ directories:
 
 .. code-block:: bash
 
-  /path/to/hunter/root/Base/Install/xcode # install directory
-  /path/to/hunter/root/Base/Source/GTest # unpacked source directory
-  /path/to/hunter/root/Download/GTest # path to downloaded archive
+  /home/travis/.hunter/_Base/0ccc3f3/b874e31/3ef6df8/Install # install directory
+  /home/travis/.hunter/_Base/Download/GTest/1.7.0-hunter-11/c6ae948/ # path to downloaded archive
 
 .. node::
 
