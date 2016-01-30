@@ -96,7 +96,7 @@ More
 
 .. _Hunter: https://github.com/ruslo/hunter
 .. _alternatives: https://github.com/hunter-packages/gate#effects
-.. _GTest: https://github.com/ruslo/hunter/wiki/Packages#gtest
+.. _GTest: https://github.com/ruslo/hunter/wiki/pkg.gtest
 .. _ExternalProject_Add: http://www.cmake.org/cmake/help/v3.0/module/ExternalProject.html
 .. _toolchains: https://github.com/ruslo/polly#toolchains
 
