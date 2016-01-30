@@ -100,8 +100,9 @@ install:
   # * http://stackoverflow.com/a/3870338/2288008
   - cmd: set PATH=%PATH:C:\Program Files\Git\usr\bin;=%
 
-  # http://www.appveyor.com/docs/installed-software#mingw-msys-cygwin
-  - cmd: set MINGW_PATH=C:\MinGW\bin
+  # Use MinGW from Qt tools because version is higher
+  # * http://www.appveyor.com/docs/installed-software#qt
+  - cmd: set MINGW_PATH=C:\Qt\Tools\mingw492_32\bin
 
   # Install Polly toolchains
   - cmd: set POLLY_VERSION="0.9.0"
