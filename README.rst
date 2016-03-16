@@ -48,6 +48,18 @@ Output
 
   -- [hunter] GTEST_ROOT: /home/travis/.hunter/_Base/0ccc3f3/b874e31/3ef6df8/Install (ver.: 1.7.0-hunter-11)
 
+* If local configuration match binary cache from server then it will be used without building from sources:
+
+.. code-block:: bash
+
+  https://raw.githubusercontent.com/ingenue/hunter-cache/.../cache.sha1
+    -> /home/travis/.hunter/_Base/Cache/meta/.../cache.sha1
+  Cache HIT: GTest
+  https://github.com/ingenue/hunter-cache/.../da62fc35901e07d30db7a1c19b7358855978e11f.tar.bz2
+    -> /home/travis/.hunter/_Base/Cache/raw/da62fc35901e07d30db7a1c19b7358855978e11f.tar.bz2
+
+Note: since cache uploaded from Travis/AppVeyor CI hence configuration will always match.
+
 Usage (toolchains)
 ------------------
 
