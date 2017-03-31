@@ -111,3 +111,7 @@ install:
 
 script:
   - build.py --toolchain ${TOOLCHAIN} --config ${CONFIG} --verbose --test
+
+branches:
+  except:
+    - /^pr\..*/
