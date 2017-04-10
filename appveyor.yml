@@ -73,6 +73,13 @@ environment:
       CONFIG: Debug
 
     ###
+    - TOOLCHAIN: "vs-14-2015-win64"
+      CONFIG: Release
+
+    - TOOLCHAIN: "vs-14-2015-win64"
+      CONFIG: Debug
+
+    ###
     - TOOLCHAIN: "vs-9-2008"
       CONFIG: Release
 
