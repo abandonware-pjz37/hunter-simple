@@ -3,11 +3,13 @@
 environment:
   matrix:
     ###
-    - TOOLCHAIN: "default"
-      CONFIG: Release
 
-    - TOOLCHAIN: "default"
-      CONFIG: Debug
+    # 'default' toolchain is the same as 'vs-14-2015'
+    # - TOOLCHAIN: "default"
+    #   CONFIG: Release
+
+    # - TOOLCHAIN: "default"
+    #   CONFIG: Debug
 
     ###
     - TOOLCHAIN: "ninja-vs-12-2013-win64"
@@ -80,11 +82,13 @@ environment:
       CONFIG: Debug
 
     ###
-    - TOOLCHAIN: "vs-9-2008"
-      CONFIG: Release
+    # Visual Studio 2010+ required:
+    # * https://github.com/google/googletest#windows-requirements
+    # - TOOLCHAIN: "vs-9-2008"
+    #   CONFIG: Release
 
-    - TOOLCHAIN: "vs-9-2008"
-      CONFIG: Debug
+    # - TOOLCHAIN: "vs-9-2008"
+    #   CONFIG: Debug
 
     ###
     - TOOLCHAIN: "mingw"

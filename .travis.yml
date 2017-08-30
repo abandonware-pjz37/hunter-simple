@@ -18,10 +18,13 @@ matrix:
       env: CONFIG=Release TOOLCHAIN=default
     - os: linux
       env: CONFIG=Debug TOOLCHAIN=default
-    - os: linux
-      env: CONFIG=Release TOOLCHAIN=clang-libstdcxx
-    - os: linux
-      env: CONFIG=Debug TOOLCHAIN=clang-libstdcxx
+
+    # Lack of C++11 support
+    # - os: linux
+    #   env: CONFIG=Release TOOLCHAIN=clang-libstdcxx
+    # - os: linux
+    #   env: CONFIG=Debug TOOLCHAIN=clang-libstdcxx
+
     - os: linux
       env: CONFIG=Release TOOLCHAIN=gcc
     - os: linux
@@ -60,10 +63,13 @@ matrix:
       env: CONFIG=Release TOOLCHAIN=libcxx
     - os: osx
       env: CONFIG=Debug TOOLCHAIN=libcxx
-    - os: osx
-      env: CONFIG=Release TOOLCHAIN=clang-libstdcxx
-    - os: osx
-      env: CONFIG=Debug TOOLCHAIN=clang-libstdcxx
+
+    # Lack of C++11 support
+    # - os: osx
+    #   env: CONFIG=Release TOOLCHAIN=clang-libstdcxx
+    # - os: osx
+    #   env: CONFIG=Debug TOOLCHAIN=clang-libstdcxx
+
     - os: osx
       env: CONFIG=Release TOOLCHAIN=osx-10-11
     - os: osx
