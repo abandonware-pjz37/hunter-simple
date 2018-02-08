@@ -54,6 +54,7 @@ include(CMakeParseArguments) # cmake_parse_arguments
 
 option(HUNTER_STATUS_PRINT "Print working status" ON)
 option(HUNTER_STATUS_DEBUG "Print a lot info" OFF)
+option(HUNTER_TLS_VERIFY "Enable/disable TLS certificate checking on downloads" ON)
 
 set(HUNTER_WIKI "https://github.com/ruslo/hunter/wiki")
 
@@ -275,6 +276,8 @@ function(hunter_gate_download dir)
       "    SHA1=${HUNTER_GATE_SHA1}\n"
       "    DOWNLOAD_DIR\n"
       "    \"${dir}\"\n"
+      "    TLS_VERIFY\n"
+      "    ${HUNTER_TLS_VERIFY}\n"
       "    SOURCE_DIR\n"
       "    \"${dir}/Unpacked\"\n"
       "    CONFIGURE_COMMAND\n"
@@ -372,6 +375,17 @@ macro(HunterGate)
     # Empty function to avoid error "unknown function"
     function(hunter_add_package)
     endfunction()
+
+    set(
+        _hunter_gate_disabled_mode_dir
+        "${CMAKE_CURRENT_LIST_DIR}/cmake/Hunter/disabled-mode"
+    )
+    if(EXISTS "${_hunter_gate_disabled_mode_dir}")
+      hunter_gate_status_debug(
+          "Adding \"disabled-mode\" modules: ${_hunter_gate_disabled_mode_dir}"
+      )
+      list(APPEND CMAKE_PREFIX_PATH "${_hunter_gate_disabled_mode_dir}")
+    endif()
   elseif(_hunter_gate_done)
     hunter_gate_status_debug("Secondary HunterGate (use old settings)")
     hunter_gate_self(
