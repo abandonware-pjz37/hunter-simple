@@ -1,7 +1,8 @@
 # OSX/Linux (https://github.com/travis-ci-tester/toolchain-table)
 
+# Workaround for https://github.com/travis-ci/travis-ci/issues/8363
 language:
-  - cpp
+  - minimal
 
 # Container-based infrastructure (Linux)
 # * https://docs.travis-ci.com/user/migrating-from-legacy/#How-can-I-use-container-based-infrastructure%3F
@@ -38,9 +39,9 @@ matrix:
     #   env: CONFIG=Debug TOOLCHAIN=clang-libstdcxx
 
     - os: linux
-      env: CONFIG=Release TOOLCHAIN=gcc
+      env: CONFIG=Release TOOLCHAIN=gcc-5
     - os: linux
-      env: CONFIG=Debug TOOLCHAIN=gcc
+      env: CONFIG=Debug TOOLCHAIN=gcc-5
     - os: linux
       env: CONFIG=Release TOOLCHAIN=android-ndk-r10e-api-19-armeabi-v7a-neon
     - os: linux
