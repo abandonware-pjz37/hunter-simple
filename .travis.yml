@@ -27,78 +27,59 @@ dist:
 matrix:
   include:
     # Linux {
-    - os: linux
-      env: CONFIG=Release TOOLCHAIN=default
-    - os: linux
-      env: CONFIG=Debug TOOLCHAIN=default
-
-    # Lack of C++11 support
-    # - os: linux
-    #   env: CONFIG=Release TOOLCHAIN=clang-libstdcxx
-    # - os: linux
-    #   env: CONFIG=Debug TOOLCHAIN=clang-libstdcxx
 
     - os: linux
       env: CONFIG=Release TOOLCHAIN=gcc-5
+
     - os: linux
       env: CONFIG=Debug TOOLCHAIN=gcc-5
+
     - os: linux
       env: CONFIG=Release TOOLCHAIN=android-ndk-r10e-api-19-armeabi-v7a-neon
+
     - os: linux
       env: CONFIG=Debug TOOLCHAIN=android-ndk-r10e-api-19-armeabi-v7a-neon
+
     - os: linux
       env: CONFIG=Release TOOLCHAIN=analyze
+
     - os: linux
       env: CONFIG=Debug TOOLCHAIN=analyze
-    - os: linux
-      env: CONFIG=Release TOOLCHAIN=sanitize-address
-    - os: linux
-      env: CONFIG=Debug TOOLCHAIN=sanitize-address
-    - os: linux
-      env: CONFIG=Release TOOLCHAIN=sanitize-leak
-    - os: linux
-      env: CONFIG=Debug TOOLCHAIN=sanitize-leak
-
-    # FIXME: https://github.com/ruslo/hunter/issues/718#issuecomment-290610583
-    # - os: linux
-    #   env: CONFIG=Release TOOLCHAIN=sanitize-thread
-    # - os: linux
-    #   env: CONFIG=Debug TOOLCHAIN=sanitize-thread
 
     # }
 
     # OSX {
-    - os: osx
-      env: CONFIG=Release TOOLCHAIN=default
-    - os: osx
-      env: CONFIG=Debug TOOLCHAIN=default
+
     - os: osx
       env: CONFIG=Release TOOLCHAIN=libcxx
+
     - os: osx
       env: CONFIG=Debug TOOLCHAIN=libcxx
 
-    # Lack of C++11 support
-    # - os: osx
-    #   env: CONFIG=Release TOOLCHAIN=clang-libstdcxx
-    # - os: osx
-    #   env: CONFIG=Debug TOOLCHAIN=clang-libstdcxx
-
     - os: osx
       env: CONFIG=Release TOOLCHAIN=osx-10-12
+
     - os: osx
       env: CONFIG=Debug TOOLCHAIN=osx-10-12
+
     - os: osx
       env: CONFIG=Release TOOLCHAIN=ios-nocodesign-10-3
+
     - os: osx
       env: CONFIG=Debug TOOLCHAIN=ios-nocodesign-10-3
+
     - os: osx
       env: CONFIG=Release TOOLCHAIN=android-ndk-r10e-api-19-armeabi-v7a-neon
+
     - os: osx
       env: CONFIG=Debug TOOLCHAIN=android-ndk-r10e-api-19-armeabi-v7a-neon
+
     - os: osx
       env: CONFIG=Release TOOLCHAIN=analyze
+
     - os: osx
       env: CONFIG=Debug TOOLCHAIN=analyze
+
     # }
 
 install:
