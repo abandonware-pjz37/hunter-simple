@@ -1,7 +1,7 @@
 # Copyright (c) 2014-2016, Ruslan Baratov
 # All rights reserved.
 
-cmake_minimum_required(VERSION 3.0)
+cmake_minimum_required(VERSION 3.2)
 
 ### Hunter snapshot that will be used ###
 include("cmake/HunterGate.cmake")
