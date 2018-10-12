@@ -40,13 +40,6 @@ environment:
       CONFIG: Debug
 
     ###
-    - TOOLCHAIN: "vs-11-2012"
-      CONFIG: Release
-
-    - TOOLCHAIN: "vs-11-2012"
-      CONFIG: Debug
-
-    ###
     - TOOLCHAIN: "vs-12-2013-win64"
       CONFIG: Release
 
